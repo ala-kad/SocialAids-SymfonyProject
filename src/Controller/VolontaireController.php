@@ -3,47 +3,24 @@
 namespace App\Controller;
 
 
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\Form\Extension\Core\Type\EmailType;
-use Symfony\Component\Form\Extension\Core\Type\IntegerType;
+use App\Form\VolontairesType;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\Routing\Annotation\Route;
-use Symfony\Component\Form\Extension\Core\Type\SubmitType;
-use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use App\Form\Type\VolontaireType;
 use App\Entity\Volontaire;
+use Symfony\Component\Routing\Annotation\Route;
 
 
-class VolontaireController extends AbstractController
-{
+class VolontaireController extends AbstractController{
+
     /**
-     * @Route("/volontaire", name="app_volontaire")
+     * @Route("/volontaire/add", name="volontaire_register")
      */
-    /*public function index(): Response
-    {
-        return $this->render('volontaire/index.html.twig', [
-            'controller_name' => 'VolontaireController',
-        ]);
-    }*/
-    /**
-     * @Route("/volontaire/add", name="app_volontaire")
-     */
-    public function create(Request $request): Response{
-        $volontaire = new Volontaire();
-
-        $volontaire->setCin("11942595");
-        $volontaire->setFirstname("Ala");
-        $volontaire->setLastname("Kaddechi");
-        $volontaire->setEmail("kaddechiala@gmail.com");
-         $form = $this->createFormBuilder($volontaire)
-            ->add("cin", IntegerType::class)
-            ->add("firstname", TextType::class)
-            ->add("lastname", TextType::class)
-            ->add("email", EmailType::class)
-            ->add('save', SubmitType::class, ['label' => 'Create Volontaire'])
-            ->getForm();
-        return $this->render('volontaire/index.html.twig', [
-            'controller_name' => 'VolontaireController','form'=>$form->createView()
-        ]);
-    }
+public function new():Response{
+    $volontaire=new Volontaire();
+    $volontaire->setCin("11942595");
+    $volontaire->setFirstname("Ala");
+    $form = $this->createForm(VolontairesType::class, $volontaire);
+    return $this->renderForm('volontaire/form-register.html.twig',['form'=>$form,]);
+}
 }
