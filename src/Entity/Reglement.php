@@ -17,7 +17,10 @@ class Reglement
     private ?string $code_reg = null;
 
     #[ORM\Column]
-    private ?float $montant = null;
+    private ?int $montant = null;
+
+    #[ORM\ManyToOne(inversedBy: 'reg')]
+    private ?Volontairee $volontairee = null;
 
     public function getId(): ?int
     {
@@ -36,14 +39,26 @@ class Reglement
         return $this;
     }
 
-    public function getMontant(): ?float
+    public function getMontant(): ?int
     {
         return $this->montant;
     }
 
-    public function setMontant(float $montant): self
+    public function setMontant(int $montant): self
     {
         $this->montant = $montant;
+
+        return $this;
+    }
+
+    public function getVolontairee(): ?Volontairee
+    {
+        return $this->volontairee;
+    }
+
+    public function setVolontairee(?Volontairee $volontairee): self
+    {
+        $this->volontairee = $volontairee;
 
         return $this;
     }
