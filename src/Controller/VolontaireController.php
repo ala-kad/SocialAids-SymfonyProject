@@ -61,27 +61,22 @@ class VolontaireController extends AbstractController
     /**
      * @Route("/volontaire/update/{id}", name="volontaire_update")
      */
-    public function updateVolontaire(Request $req, ManagerRegistry $doctrine, int $id): Response
+    public function updateVolontaire(Request $request, Volontaire $volontaire, ManagerRegistry $doctrine ): Response
     {
-        $em = $doctrine->getManager();
-        $volontaire = $em->getRepository(Volontaire::class)->find($id);
-        if (!$volontaire) {
-            throw $this->createNotFoundException(
-                'No product found for id ' . $id
-            );
+        $entityManager=$doctrine->getManager();
+        $form= $this->createForm(VolontairesType::class, $volontaire);
+        $form->handleRequest($request);
+        if ($form->isSubmitted() && $form->isValid()) {
+            $data = $form->getData();
+            $entityManager->persist($data);
+            $entityManager->flush();
+            return $this->redirectToRoute('volontaire_list');
         }
-        dump($volontaire);
-        # $this->renderForm("volontaire/form-register.html.twig");
-        /* $volontaire->setCin($req.cin);
-         $volontaire->setFirstname($req.firstname);
-         $volontaire->setCin($req.lastname);
-         $volontaire->setCin($req.email);
-         $em->flush();
 
-         return $this->redirectToRoute('volontaire_show', [
-             'id' => $volontaire->getId()
-         ]);*/
-        return new Response("Hello");
+        return $this->render('volontaire/form-edit.html.twig', [
+            'volontaire' => $volontaire,
+            'form' => $form->createView(),
+        ]);
     }
 
     /**
