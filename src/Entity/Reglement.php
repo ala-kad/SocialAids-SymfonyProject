@@ -20,7 +20,7 @@ class Reglement
     private ?int $montant = null;
 
     #[ORM\ManyToOne(inversedBy: 'reg')]
-    private ?Volontairee $volontairee = null;
+    private ?Volontaire $volontaire = null;
 
     public function getId(): ?int
     {
@@ -51,14 +51,14 @@ class Reglement
         return $this;
     }
 
-    public function getVolontairee(): ?Volontairee
+    public function getVolontaire(): ?Volontaire
     {
-        return $this->volontairee;
+        return $this->volontaire;
     }
 
-    public function setVolontairee(?Volontairee $volontairee): self
+    public function setVolontaire(?Volontaire $volontaire): self
     {
-        $this->volontairee = $volontairee;
+        $this->volontaire = $volontaire;
 
         return $this;
     }
