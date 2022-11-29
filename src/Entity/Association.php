@@ -5,52 +5,37 @@ namespace App\Entity;
 use App\Repository\AssociationRepository;
 use Doctrine\ORM\Mapping as ORM;
 
-/**
- * @ORM\Entity(repositoryClass=AssociationRepository::class)
- */
+
+#[ORM\Entity(repositoryClass:AssociationRepository::class)]
+
 class Association
 {
-    /**
-     * @ORM\Id
-     * @ORM\GeneratedValue
-     * @ORM\Column(type="integer")
-     */
-    private $id;
+    #[ORM\Id]
+    #[ORM\GeneratedValue]
+    #[ORM\Column]
+    private ?int $id = null;
 
-    /**
-     * @ORM\Column(type="string", length=50)
-     */
-    private $Fistname;
-    /**
-     * @ORM\Column(type="string", length=50)
-     */
+    #[ORM\Column(length: 50)]
+    private ?string  $Fistname;
 
 
-    /**
-     * @ORM\Column(type="string", length=50)
-     */
-    private $email;
+    #[ORM\Column(length: 50)]
+    private ?string $email = null;
+
+    #[ORM\Column(length: 20)]
+    private ?int $tel = null;
+
+    #[ORM\Column(length: 50)]
+    private ?string $code = null;
 
 
-    /**
-     * @ORM\Column(type="integer")
-     */
-    private $tel;
+    #[ORM\Column(length: 50)]
+    private ?string $local = null;
 
-    /**
-     * @ORM\Column(type="string", length=50)
-     */
-    private $code;
 
-    /**
-     * @ORM\Column(type="string", length=50)
-     */
-    private $local;
 
-    /**
-     * @ORM\Column(type="string", length=150)
-     */
-    private $object;
+    #[ORM\Column(length: 50)]
+    private ?string $object = null;
 
     public function getId(): ?int
     {
@@ -72,9 +57,9 @@ class Association
 
 
 
-    public function getEmail(): ?string
+    public function getEmail($email): ?string
     {
-        return this->$email;}
+        return $this->$email ;}
 
 
     public function setEmail(string $email): self
