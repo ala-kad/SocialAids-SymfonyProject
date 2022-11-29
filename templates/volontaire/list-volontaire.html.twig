@@ -1,8 +1,10 @@
 {% extends 'base.html.twig' %}
 {% block body %}
-<table style="width: 100%;border: 2px solid ;">
-    <tr style="border: 2px green;">
-        <td style="border: 2px red solid;background: #B0413E">Id</td>
+<div class="container">
+<table style="width: 100%;border: 2px solid ;margin-top: 50px;">
+    <tbody>
+    <tr>
+        <td style="border: 2px red solid;">Id</td>
         <td style="border: 2px red solid;">Cin</td>
         <td style="border: 2px red solid;">First Name</td>
         <td style="border: 2px red solid;">Last Name</td>
@@ -17,5 +19,7 @@
         <td style="border: 2px red solid;">{{ v.email }}</td>
     </tr>
     {% endfor %}
+    </tbody>
 </table>
+</div>
 {% endblock %}
