@@ -64,7 +64,6 @@ class VolontaireController extends AbstractController
     public function updateVolontaire(Request $request, Volontaire $volontaire, ManagerRegistry $doctrine ): Response
     {
         $entityManager=$doctrine->getManager();
-        #$req=$entityManager->getRepository(Volontaire::class)->find($id);
         $form= $this->createForm(VolontairesType::class, $volontaire);
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
