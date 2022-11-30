@@ -13,9 +13,11 @@ class CompteType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('id')
+            ->add('nom')
+            ->add('prenom')
             ->add('email')
             ->add('mot_pass')
+            ->add('save', SubmitType::class)
 
         ;
     }

@@ -14,7 +14,7 @@ class ProduitType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-
+            ->add('nom')
             ->add('ref')
             ->add('montant')
             ->add('save', SubmitType::class)
