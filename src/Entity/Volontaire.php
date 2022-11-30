@@ -5,36 +5,34 @@ namespace App\Entity;
 use App\Repository\VolontaireRepository;
 use Doctrine\ORM\Mapping as ORM;
 
-/**
- * @ORM\Entity(repositoryClass=VolontaireRepository::class)
- */
+#[ORM\Entity(repositoryClass: VolontaireRepository::class)]
+
 class Volontaire
 {
-    /**
-     * @ORM\Id
-     * @ORM\GeneratedValue
-     * @ORM\Column(type="integer")
-     */
+    #[ORM\Id]
+    #[ORM\GeneratedValue]
+    #[ORM\Column]
     private $id;
 
-    /**
-     * @ORM\Column(type="string", length=10)
-     */
+    #[ORM\Column]
     private $cin;
 
-    /**
-     * @ORM\Column(type="string", length=20)
-     */
+    #/**
+     #* @ORM\Column(type="string", length=20)
+    # */
+    #[ORM\Column]
     private $firstname;
 
-    /**
-     * @ORM\Column(type="string", length=20)
-     */
+    #/**
+    # * @ORM\Column(type="string", length=20)
+     #*/
+    #[ORM\Column]
     private $lastname;
 
-    /**
-     * @ORM\Column(type="string", length=50)
-     */
+    #/**
+     #* @ORM\Column(type="string", length=50)
+    # */
+    #[ORM\Column]
     private $email;
 
     public function getId(): ?int
