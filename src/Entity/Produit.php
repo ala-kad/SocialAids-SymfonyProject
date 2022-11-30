@@ -15,6 +15,9 @@ class Produit
     #[ORM\GeneratedValue]
     #[ORM\Column]
     private ?int $id = null;
+    #[ORM\Column(length: 255)]
+    private ?string $nom = null;
+
 
     #[ORM\Column(length: 100)]
     private ?string $ref = null;
@@ -25,18 +28,32 @@ class Produit
     #[ORM\OneToMany(mappedBy: 'produit', targetEntity: Categorie::class)]
     private Collection $Categ;
 
-    #[ORM\ManyToMany(targetEntity: Volontairee::class, mappedBy: 'prod')]
-    private Collection $volontairees;
+    #[ORM\ManyToMany(targetEntity: Volontaire::class, mappedBy: 'prod')]
+    private Collection $volontaires;
+
+
 
     public function __construct()
     {
         $this->Categ = new ArrayCollection();
-        $this->volontairees = new ArrayCollection();
+        $this->volontaires = new ArrayCollection();
     }
 
     public function getId(): ?int
     {
         return $this->id;
+    }
+
+    public function getNom(): ?string
+    {
+        return $this->nom;
+    }
+
+    public function setNom(string $nom): self
+    {
+        $this->nom = $nom;
+
+        return $this;
     }
 
     public function getRef(): ?string
@@ -94,29 +111,30 @@ class Produit
     }
 
     /**
-     * @return Collection<int, Volontairee>
+     * @return Collection<int, Volontaire>
      */
-    public function getVolontairees(): Collection
+    public function getVolontaires(): Collection
     {
-        return $this->volontairees;
+        return $this->volontaires;
     }
 
-    public function addVolontairee(Volontairee $volontairee): self
+    public function addVolontaire(Volontaire $volontaire): self
     {
-        if (!$this->volontairees->contains($volontairee)) {
-            $this->volontairees->add($volontairee);
-            $volontairee->addProd($this);
+        if (!$this->volontaires->contains($volontaire)) {
+            $this->volontaires->add($volontaire);
+            $volontaire->addProd($this);
         }
 
         return $this;
     }
 
-    public function removeVolontairee(Volontairee $volontairee): self
+    public function removeVolontaire(Volontaire $volontaire): self
     {
-        if ($this->volontairees->removeElement($volontairee)) {
-            $volontairee->removeProd($this);
+        if ($this->volontaires->removeElement($volontaire)) {
+            $volontaire->removeProd($this);
         }
 
         return $this;
     }
+
 }

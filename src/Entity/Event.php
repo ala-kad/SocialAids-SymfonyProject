@@ -25,13 +25,13 @@ class Event
     #[ORM\ManyToMany(targetEntity: Theme::class, inversedBy: 'events')]
     private Collection $Events;
 
-    #[ORM\ManyToMany(targetEntity: Volontairee::class, mappedBy: 'ev')]
-    private Collection $volontairees;
+    #[ORM\ManyToMany(targetEntity: Volontaire::class, mappedBy: 'ev')]
+    private Collection $volontaires;
 
     public function __construct()
     {
         $this->Events = new ArrayCollection();
-        $this->volontairees = new ArrayCollection();
+        $this->volontaires = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -90,25 +90,25 @@ class Event
     /**
      * @return Collection<int, Volontairee>
      */
-    public function getVolontairees(): Collection
+    public function getVolontaires(): Collection
     {
-        return $this->volontairees;
+        return $this->volontaires;
     }
 
-    public function addVolontairee(Volontairee $volontairee): self
+    public function addVolontaire(Volontaire $volontaire): self
     {
-        if (!$this->volontairees->contains($volontairee)) {
-            $this->volontairees->add($volontairee);
-            $volontairee->addEv($this);
+        if (!$this->volontaires->contains($volontaire)) {
+            $this->volontaires->add($volontaire);
+            $volontaire->addEv($this);
         }
 
         return $this;
     }
 
-    public function removeVolontairee(Volontairee $volontairee): self
+    public function removeVolontaire (Volontaire $volontaire): self
     {
-        if ($this->volontairees->removeElement($volontairee)) {
-            $volontairee->removeEv($this);
+        if ($this->volontaires->removeElement($volontaire)) {
+            $volontaire->removeEv($this);
         }
 
         return $this;

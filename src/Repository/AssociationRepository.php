@@ -21,7 +21,7 @@ class AssociationRepository extends ServiceEntityRepository
         parent::__construct($registry, Association::class);
     }
 
-    public function add(Association $entity, bool $flush = false): void
+    public function save(Association $entity, bool $flush = false): void
     {
         $this->getEntityManager()->persist($entity);
 

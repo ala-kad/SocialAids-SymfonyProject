@@ -3,46 +3,76 @@
 namespace App\Controller;
 
 use App\Entity\Association;
-use Composer\DependencyResolver\Request;
-use Doctrine\DBAL\Types\IntegerType;
+use App\Form\AssociationType;
+use App\Repository\AssociationRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\Form\Extension\Core\Type\EmailType;
-use Symfony\Component\Form\Extension\Core\Type\SubmitType;
-use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
+#[Route('/association')]
 class AssociationController extends AbstractController
 {
-    /**
-     * @Route("/SocialAids/association", name= "app_association")
-     */
-    public function index(): Response
+    #[Route('/', name: 'app_association_index', methods: ['GET'])]
+    public function index(AssociationRepository $associationRepository): Response
     {
         return $this->render('association/index.html.twig', [
-            'controller_name' => 'AssociationController',
+            'associations' => $associationRepository->findAll(),
         ]);
     }
-    public function create(Request $request):Response{
-        $association =new Association();
-        $association->setFirstname("mayssa");
-        $association->setEmail("elmaymayssa1@gmail.com");
-        $association->setTel("22559450");
-        $association->setCode("3333");
-        $association->setLocal("adresse d association ");
-        $association->setObject("discription");
 
-        $form = $this->createForm($association)
-            ->add("First Name", TextType::class, ['label' => 'votre Nom'])
-            ->add("Email", EmailType::class, ['label' => 'Votre Email'])
-            ->add("Tel", TextType::class, ['label' => 'votre Tel'])
-            ->add("Code", TextType::class, ['label' => 'votre Code'])
-            ->add("Local", TextType::class, ['label' => 'votre Local'])
-            ->add("Object", TextType::class , ['label' => 'votre Object'])
+    #[Route('/new', name: 'app_association_new', methods: ['GET', 'POST'])]
+    public function new(Request $request, AssociationRepository $associationRepository): Response
+    {
+        $association = new Association();
+        $form = $this->createForm(AssociationType::class, $association);
+        $form->handleRequest($request);
 
-            ->add('save', SubmitType::class, ['label' => 'Create Volontaire'])
-            ->getForm();
-        return $this->render('association/index.html.twig');
+        if ($form->isSubmitted() && $form->isValid()) {
+            $associationRepository->save($association, true);
+
+            return $this->redirectToRoute('app_association_index', [], Response::HTTP_SEE_OTHER);
         }
-}
 
+        return $this->renderForm('association/new.html.twig', [
+            'association' => $association,
+            'form' => $form,
+        ]);
+    }
+
+    #[Route('/{id}', name: 'app_association_show', methods: ['GET'])]
+    public function show(Association $association): Response
+    {
+        return $this->render('association/show.html.twig', [
+            'association' => $association,
+        ]);
+    }
+
+    #[Route('/{id}/edit', name: 'app_association_edit', methods: ['GET', 'POST'])]
+    public function edit(Request $request, Association $association, AssociationRepository $associationRepository): Response
+    {
+        $form = $this->createForm(AssociationType::class, $association);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $associationRepository->save($association, true);
+
+            return $this->redirectToRoute('app_association_index', [], Response::HTTP_SEE_OTHER);
+        }
+
+        return $this->renderForm('association/edit.html.twig', [
+            'association' => $association,
+            'form' => $form,
+        ]);
+    }
+
+    #[Route('/{id}', name: 'app_association_delete', methods: ['POST'])]
+    public function delete(Request $request, Association $association, AssociationRepository $associationRepository): Response
+    {
+        if ($this->isCsrfTokenValid('delete'.$association->getId(), $request->request->get('_token'))) {
+            $associationRepository->remove($association, true);
+        }
+
+        return $this->redirectToRoute('app_association_index', [], Response::HTTP_SEE_OTHER);
+    }
+}
