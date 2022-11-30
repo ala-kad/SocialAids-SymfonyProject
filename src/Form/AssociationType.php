@@ -2,29 +2,34 @@
 
 namespace App\Form;
 
-
+use App\Entity\Association;
 use App\Entity\Produit;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
-use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
-class ProduitType extends AbstractType
+class AssociationType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
             ->add('nom')
-            ->add('ref')
-            ->add('montant')
-            ->add('save', SubmitType::class)
+            ->add('email')
+            ->add('ville')
+            ->add('tel')
+            ->add('code')
+            ->add('local')
+            ->add('objectif')
+
+
         ;
     }
 
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
-            'data_class' => Produit::class,
+            'data_class' => Association::class,
         ]);
     }
 }

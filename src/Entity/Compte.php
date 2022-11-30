@@ -14,7 +14,11 @@ class Compte
     #[ORM\GeneratedValue]
     #[ORM\Column]
     private ?int $id = null;
+    #[ORM\Column(length: 255)]
+    private ?string $nom = null;
 
+    #[ORM\Column(length: 255)]
+    private ?string $prenom = null;
     #[ORM\Column(length: 50)]
     private ?string $email = null;
 
@@ -26,6 +30,8 @@ class Compte
 
     #[ORM\OneToOne(cascade: ['persist', 'remove'])]
     private ?Association $ssoca = null;
+
+
 
     public function __construct()
     {
@@ -99,6 +105,30 @@ class Compte
     public function setSsoca(?Association $ssoca): self
     {
         $this->ssoca = $ssoca;
+
+        return $this;
+    }
+
+    public function getNom(): ?string
+    {
+        return $this->nom;
+    }
+
+    public function setNom(string $nom): self
+    {
+        $this->nom = $nom;
+
+        return $this;
+    }
+
+    public function getPrenom(): ?string
+    {
+        return $this->prenom;
+    }
+
+    public function setPrenom(string $prenom): self
+    {
+        $this->prenom = $prenom;
 
         return $this;
     }
