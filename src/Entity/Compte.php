@@ -29,8 +29,7 @@ class Compte
     private Collection $administrateurs;
 
     #[ORM\OneToOne(cascade: ['persist', 'remove'])]
-    private ?Association $ssoca = null;
-
+    private ?Association $ssoca ;
 
 
     public function __construct()
