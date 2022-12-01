@@ -28,3 +28,4 @@
 ./.env.test
 ./composer.lock
 ./symfony.lock
+/.env
