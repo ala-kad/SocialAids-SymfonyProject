@@ -38,18 +38,20 @@ class Association
     #[ORM\Column(length: 255)]
     private ?string $objectif = null;
 
-    #[ORM\ManyToMany(targetEntity: Event::class, inversedBy: 'associations')]
-    private Collection $associations;
+    #[ORM\OneToMany(mappedBy: 'AsPro', targetEntity: AssProduit::class)]
+    private Collection $assProduits;
+
+    #[ORM\OneToMany(mappedBy: 'id_Association', targetEntity: AssProduit::class)]
+    private Collection $AssProduits;
 
 
-    #[ORM\OneToMany(mappedBy: 'association', targetEntity: Administrateur::class)]
-    private Collection $Adm;
+
+
 
     public function __construct()
     {
-        $this->associations = new ArrayCollection();
-        $this->prod = new ArrayCollection();
-        $this->Adm = new ArrayCollection();
+        $this->assProduits = new ArrayCollection();
+        $this->AssProduits = new ArrayCollection();
     }
 
 
@@ -144,65 +146,31 @@ class Association
     }
 
     /**
-     * @return Collection<int, Event>
+     * @return Collection<int, AssProduit>
      */
-    public function getAssociations(): Collection
+    public function getAssProduits(): Collection
     {
-        return $this->associations;
+        return $this->assProduits;
     }
 
-    public function addAssociation(Event $association): self
+    public function addAssProduit(AssProduit $assProduit): self
     {
-        if (!$this->associations->contains($association)) {
-            $this->associations->add($association);
+        if (!$this->assProduits->contains($assProduit)) {
+            $this->assProduits->add($assProduit);
+            $assProduit->setAsPro($this);
         }
 
         return $this;
     }
 
-    public function removeAssociation(Event $association): self
+    public function removeAssProduit(AssProduit $assProduit): self
     {
-        $this->associations->removeElement($association);
-
-        return $this;
-    }
-
-
-
-    public function removeProd(Produit $prod): self
-    {
-        $this->prod->removeElement($prod);
-
-        return $this;
-    }
-
-    /**
-     * @return Collection<int, Administrateur>
-     */
-    public function getAdm(): Collection
-    {
-        return $this->Adm;
-    }
-
-    public function addAdm(Administrateur $adm): self
-    {
-        if (!$this->Adm->contains($adm)) {
-            $this->Adm->add($adm);
-            $adm->setAssociation($this);
-        }
-
-        return $this;
-    }
-
-    public function removeAdm(Administrateur $adm): self
-    {
-        if ($this->Adm->removeElement($adm)) {
+        if ($this->assProduits->removeElement($assProduit)) {
             // set the owning side to null (unless already changed)
-            if ($adm->getAssociation() === $this) {
-                $adm->setAssociation(null);
+            if ($assProduit->getAsPro() === $this) {
+                $assProduit->setAsPro(null);
             }
         }
 
         return $this;
-    }
-}
+    }}

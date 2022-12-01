@@ -17,26 +17,33 @@ class Produit
     private ?int $id = null;
     #[ORM\Column(length: 255)]
     private ?string $nom = null;
-
-
     #[ORM\Column(length: 100)]
     private ?string $ref = null;
 
     #[ORM\Column]
     private ?int $montant = null;
 
-    #[ORM\OneToMany(mappedBy: 'produit', targetEntity: Categorie::class)]
-    private Collection $Categ;
+    #[ORM\OneToMany(mappedBy: 'ProAss', targetEntity: AssProduit::class)]
+    private Collection $assProduits;
 
-    #[ORM\ManyToMany(targetEntity: Volontaire::class, mappedBy: 'prod')]
-    private Collection $volontaires;
+    #[ORM\OneToMany(mappedBy: 'ProVol', targetEntity: VolProduit::class)]
+    private Collection $volProduits;
+
+    #[ORM\OneToMany(mappedBy: 'id_produit', targetEntity: AssProduit::class)]
+    private Collection $AssProduits;
+
+    #[ORM\OneToMany(mappedBy: 'id_prod', targetEntity: VolProduit::class)]
+    private Collection $VolProd;
+
 
 
 
     public function __construct()
     {
-        $this->Categ = new ArrayCollection();
-        $this->volontaires = new ArrayCollection();
+        $this->assProduits = new ArrayCollection();
+        $this->volProduits = new ArrayCollection();
+        $this->AssProduits = new ArrayCollection();
+        $this->VolProd = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -81,29 +88,29 @@ class Produit
     }
 
     /**
-     * @return Collection<int, Categorie>
+     * @return Collection<int, AssProduit>
      */
-    public function getCateg(): Collection
+    public function getAssProduits(): Collection
     {
-        return $this->Categ;
+        return $this->assProduits;
     }
 
-    public function addCateg(Categorie $categ): self
+    public function addAssProduit(AssProduit $assProduit): self
     {
-        if (!$this->Categ->contains($categ)) {
-            $this->Categ->add($categ);
-            $categ->setProduit($this);
+        if (!$this->assProduits->contains($assProduit)) {
+            $this->assProduits->add($assProduit);
+            $assProduit->setProAss($this);
         }
 
         return $this;
     }
 
-    public function removeCateg(Categorie $categ): self
+    public function removeAssProduit(AssProduit $assProduit): self
     {
-        if ($this->Categ->removeElement($categ)) {
+        if ($this->assProduits->removeElement($assProduit)) {
             // set the owning side to null (unless already changed)
-            if ($categ->getProduit() === $this) {
-                $categ->setProduit(null);
+            if ($assProduit->getProAss() === $this) {
+                $assProduit->setProAss(null);
             }
         }
 
@@ -111,30 +118,62 @@ class Produit
     }
 
     /**
-     * @return Collection<int, Volontaire>
+     * @return Collection<int, VolProduit>
      */
-    public function getVolontaires(): Collection
+    public function getVolProduits(): Collection
     {
-        return $this->volontaires;
+        return $this->volProduits;
     }
 
-    public function addVolontaire(Volontaire $volontaire): self
+    public function addVolProduit(VolProduit $volProduit): self
     {
-        if (!$this->volontaires->contains($volontaire)) {
-            $this->volontaires->add($volontaire);
-            $volontaire->addProd($this);
+        if (!$this->volProduits->contains($volProduit)) {
+            $this->volProduits->add($volProduit);
+            $volProduit->setProVol($this);
         }
 
         return $this;
     }
 
-    public function removeVolontaire(Volontaire $volontaire): self
+    public function removeVolProduit(VolProduit $volProduit): self
     {
-        if ($this->volontaires->removeElement($volontaire)) {
-            $volontaire->removeProd($this);
+        if ($this->volProduits->removeElement($volProduit)) {
+            // set the owning side to null (unless already changed)
+            if ($volProduit->getProVol() === $this) {
+                $volProduit->setProVol(null);
+            }
         }
 
         return $this;
     }
 
+    /**
+     * @return Collection<int, VolProduit>
+     */
+    public function getVolProd(): Collection
+    {
+        return $this->VolProd;
+    }
+
+    public function addVolProd(VolProduit $volProd): self
+    {
+        if (!$this->VolProd->contains($volProd)) {
+            $this->VolProd->add($volProd);
+            $volProd->setIdProd($this);
+        }
+
+        return $this;
+    }
+
+    public function removeVolProd(VolProduit $volProd): self
+    {
+        if ($this->VolProd->removeElement($volProd)) {
+            // set the owning side to null (unless already changed)
+            if ($volProd->getIdProd() === $this) {
+                $volProd->setIdProd(null);
+            }
+        }
+
+        return $this;
+    }
 }

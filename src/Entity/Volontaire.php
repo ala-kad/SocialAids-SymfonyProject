@@ -14,7 +14,7 @@ class Volontaire
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
-    private $id;
+    private ?int $id= null;
 
     #[ORM\Column]
     private $cin;
@@ -36,27 +36,19 @@ class Volontaire
     # */
     #[ORM\Column]
     private $email;
-    #[ORM\OneToMany(mappedBy: 'volontaire', targetEntity: Reglement::class)]
-    private Collection $reg;
 
-    #[ORM\ManyToMany(targetEntity: Produit::class, inversedBy: 'volontaires')]
-    private Collection $prod;
+    #[ORM\OneToMany(mappedBy: 'VolPro', targetEntity: VolProduit::class)]
+    private Collection $volProduits;
 
-    #[ORM\OneToOne(cascade: ['persist', 'remove'])]
-    private ?Compte $comp = null;
+    #[ORM\OneToMany(mappedBy: 'id_Vol', targetEntity: VolProduit::class)]
+    private Collection $VolProduits;
 
-    #[ORM\ManyToMany(targetEntity: Event::class, inversedBy: 'volontaires')]
-    private Collection $ev;
 
-    #[ORM\OneToMany(mappedBy: 'volontaire', targetEntity: Administrateur::class)]
-    private Collection $Ad;
 
     public function __construct()
     {
-        $this->reg = new ArrayCollection();
-        $this->prod = new ArrayCollection();
-        $this->ev = new ArrayCollection();
-        $this->Ad = new ArrayCollection();
+        $this->volProduits = new ArrayCollection();
+        $this->VolProduits = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -111,123 +103,33 @@ class Volontaire
 
         return $this;
     }
+
     /**
-     * @return Collection<int, Reglement>
+     * @return Collection<int, VolProduit>
      */
-    public function getReg(): Collection
+    public function getVolProduits(): Collection
     {
-        return $this->reg;
+        return $this->volProduits;
     }
 
-    public function addReg(Reglement $reg): self
+    public function addVolProduit(VolProduit $volProduit): self
     {
-        if (!$this->reg->contains($reg)) {
-            $this->reg->add($reg);
-            $reg->setVolontaire($this);
+        if (!$this->volProduits->contains($volProduit)) {
+            $this->volProduits->add($volProduit);
+            $volProduit->setVolPro($this);
         }
 
         return $this;
     }
 
-    public function removeReg(Reglement $reg): self
+    public function removeVolProduit(VolProduit $volProduit): self
     {
-        if ($this->reg->removeElement($reg)) {
+        if ($this->volProduits->removeElement($volProduit)) {
             // set the owning side to null (unless already changed)
-            if ($reg->getVolontaire() === $this) {
-                $reg->setVolontaire(null);
+            if ($volProduit->getVolPro() === $this) {
+                $volProduit->setVolPro(null);
             }
         }
 
         return $this;
-    }
-
-    /**
-     * @return Collection<int, Produit>
-     */
-    public function getProd(): Collection
-    {
-        return $this->prod;
-    }
-
-    public function addProd(Produit $prod): self
-    {
-        if (!$this->prod->contains($prod)) {
-            $this->prod->add($prod);
-        }
-
-        return $this;
-    }
-
-    public function removeProd(Produit $prod): self
-    {
-        $this->prod->removeElement($prod);
-
-        return $this;
-    }
-
-    public function getComp(): ?Compte
-    {
-        return $this->comp;
-    }
-
-    public function setComp(?Compte $comp): self
-    {
-        $this->comp = $comp;
-
-        return $this;
-    }
-
-    /**
-     * @return Collection<int, Event>
-     */
-    public function getEv(): Collection
-    {
-        return $this->ev;
-    }
-
-    public function addEv(Event $ev): self
-    {
-        if (!$this->ev->contains($ev)) {
-            $this->ev->add($ev);
-        }
-
-        return $this;
-    }
-
-    public function removeEv(Event $ev): self
-    {
-        $this->ev->removeElement($ev);
-
-        return $this;
-    }
-
-    /**
-     * @return Collection<int, Administrateur>
-     */
-    public function getAd(): Collection
-    {
-        return $this->Ad;
-    }
-
-    public function addAd(Administrateur $ad): self
-    {
-        if (!$this->Ad->contains($ad)) {
-            $this->Ad->add($ad);
-            $ad->setVolontaire($this);
-        }
-
-        return $this;
-    }
-
-    public function removeAd(Administrateur $ad): self
-    {
-        if ($this->Ad->removeElement($ad)) {
-            // set the owning side to null (unless already changed)
-            if ($ad->getVolontaire() === $this) {
-                $ad->setVolontaire(null);
-            }
-        }
-
-        return $this;
-    }
-}
+    }}
