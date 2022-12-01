@@ -22,15 +22,6 @@ class Administrateur
 
     private ?int $tel = null;
 
-    #[ORM\ManyToOne(inversedBy: 'administrateurs')]
-    private ?Compte $comptes = null;
-
-    #[ORM\ManyToOne(inversedBy: 'Adm')]
-    private ?Association $association = null;
-
-    #[ORM\ManyToOne(inversedBy: 'Ad')]
-    private ?Volontaire $volontaire = null;
-
     public function getId(): ?int
     {
         return $this->id;
@@ -72,39 +63,5 @@ class Administrateur
         return $this;
     }
 
-    public function getComptes(): ?Compte
-    {
-        return $this->comptes;
-    }
 
-    public function setComptes(?Compte $comptes): self
-    {
-        $this->comptes = $comptes;
-
-        return $this;
-    }
-
-    public function getAssociation(): ?Association
-    {
-        return $this->association;
-    }
-
-    public function setAssociation(?Association $association): self
-    {
-        $this->association = $association;
-
-        return $this;
-    }
-
-    public function getVolontaire(): ?Volontaire
-    {
-        return $this->volontaire;
-    }
-
-    public function setVolontaire(?Volontaire $volontaire): self
-    {
-        $this->volontaire = $volontaire;
-
-        return $this;
-    }
 }

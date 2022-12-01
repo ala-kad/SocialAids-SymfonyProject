@@ -19,8 +19,6 @@ class Reglement
     #[ORM\Column]
     private ?int $montant = null;
 
-    #[ORM\ManyToOne(inversedBy: 'reg')]
-    private ?Volontaire $volontaire = null;
 
     public function getId(): ?int
     {
@@ -51,15 +49,4 @@ class Reglement
         return $this;
     }
 
-    public function getVolontaire(): ?Volontaire
-    {
-        return $this->volontaire;
-    }
-
-    public function setVolontaire(?Volontaire $volontaire): self
-    {
-        $this->volontaire = $volontaire;
-
-        return $this;
-    }
 }
