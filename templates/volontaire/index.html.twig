@@ -1,23 +1,42 @@
 {% extends 'base.html.twig' %}
+    {% block title %}Volontaire index{% endblock %}
 
-{% block title %}Hello Volontaire Controller!{% endblock %}
+    {% block body %}
+        <h1>Volontaire index</h1>
 
-{% block body %}
-<style>
-    .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
-    .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
-</style>
+        <table class="table">
+            <thead>
+            <tr>
+                <th>CIN</th>
+                <th>Nom</th>
+                <th>Prénom</th>
+                <th>Email</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for v in volontaires %}
+                <tr>
+                    <td style="border: 2px red solid;">{{ v.id }}</td>
+                    <td style="border: 2px red solid;">{{ v.cin }}</td>
+                    <td style="border: 2px red solid;">{{ v.firstname }}</td>
+                    <td style="border: 2px red solid;">{{ v.lastname }}</td>
+                    <td style="border: 2px red solid;">{{ v.email }}</td>
+                    <td>
+                        <a href="{{ path('app_volontaire_index', {'id': v.id}) }}">show</a>
+                        <a href="{{ path('volontaire_update', {'id': v.id}) }}">edit</a>
+                    </td>
+                </tr>
+            {% else %}
+                <tr>
+                    <td colspan="9">no records found</td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
 
-<div class="example-wrapper">
-    <h1>Hello {{ controller_name }}! ✅</h1>
-
-    This friendly message is coming from:
-    <ul>
-        <li>Your controller at <code><a href="{{ 'C:/xampp/htdocs/SocialAids/src/Controller/VolontaireController.php'|file_link(0) }}">src/Controller/VolontaireController.php</a></code></li>
-        <li>Your template at <code><a href="{{ 'C:/xampp/htdocs/SocialAids/templates/volontaire/index.html.twig'|file_link(0) }}">templates/volontaire/index.html.twig</a></code></li>
-    </ul>
-</div>
+        <a href="{{ path('volontaire_register') }}">Create new</a>
+    {% endblock %}
 
 
 
-{% endblock %}
+
