@@ -1,70 +1,61 @@
 <?php
-
 namespace App\Entity;
 
 use App\Repository\VolontaireRepository;
-use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
-#[ORM\Entity(repositoryClass: VolontaireRepository::class)]
-
-
+/**
+ * @ORM\Entity(repositoryClass=VolontaireRepository::class)
+ */
 class Volontaire
 {
-    #[ORM\Id]
-    #[ORM\GeneratedValue]
-    #[ORM\Column]
-    private ?int $id= null;
+    /**
+     * @ORM\Id
+     * @ORM\GeneratedValue
+     * @ORM\Column(type="integer")
+     */
+    private int $id;
 
-    #[ORM\Column]
-    private $cin;
-
-    #/**
-     #* @ORM\Column(type="string", length=20)
-    # */
-    #[ORM\Column]
-    private $firstname;
-
-    #/**
-    # * @ORM\Column(type="string", length=20)
-     #*/
-    #[ORM\Column]
-    private $lastname;
-
-
-     #* @ORM\Column(type="string", length=50)
-    # */
-    #[ORM\Column]
-    private $email;
+/**
+ * @ORM\Column(type="integer")
+  */
+    private int $cin;
 
     /**
-     * ORM\OneToMany(targetEntity: "VolProduit::class", inversedBy="VolPro")
+     * @ORM\Column(type="string", length=50)
      */
-    private Collection $volProduits;
+    private String $firstname;
 
     /**
-     * ORM\OneToMany(targetEntity: "VolProduit::class", inversedBy="id_Vol")
+     * @ORM\Column(type="string", length=50)
      */
-    private Collection $VolProduits;
+    private String $lastname;
 
-    public function __construct()
-    {
-        $this->volProduits = new ArrayCollection();
-        $this->VolProduits = new ArrayCollection();
-    }
+     /**
+      * @ORM\Column(type="string", length=50)
+     */
+    private String $email;
+
+    /**
+     * @ORM\Column(type="string", length=50)
+     */
+    private String $password;
+
+
+
+    public function __construct(){}
 
     public function getId(): ?int
     {
         return $this->id;
     }
 
-    public function getCin(): ?string
+    public function getCin(): ?int
     {
         return $this->cin;
     }
 
-    public function setCin(string $cin): self
+    public function setCin(int $cin): self
     {
         $this->cin = $cin;
 
@@ -107,32 +98,15 @@ class Volontaire
         return $this;
     }
 
-    /**
-     * @return Collection<int, VolProduit>
-     */
-    public function getVolProduits(): Collection
+    public function getPassword(): ?string
     {
-        return $this->volProduits;
+        return $this->password;
     }
 
-    public function addVolProduit(VolProduit $volProduit): self
+    public function setPassword(string $password): self
     {
-        if (!$this->volProduits->contains($volProduit)) {
-            $this->volProduits->add($volProduit);
-            $volProduit->setVolPro($this);
-        }
+        $this->password = $password;
 
         return $this;
     }
-
-    public function removeVolProduit(VolProduit $volProduit): self
-    {
-        if ($this->volProduits->removeElement($volProduit)) {
-            // set the owning side to null (unless already changed)
-            if ($volProduit->getVolPro() === $this) {
-                $volProduit->setVolPro(null);
-            }
-        }
-
-        return $this;
-    }}
+}

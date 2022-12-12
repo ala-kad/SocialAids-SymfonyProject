@@ -17,6 +17,7 @@ class VolontairesType extends AbstractType
             ->add('firstname')
             ->add('lastname')
             ->add('email')
+            ->add('password')
             ->add('save', SubmitType::class)
         ;
     }

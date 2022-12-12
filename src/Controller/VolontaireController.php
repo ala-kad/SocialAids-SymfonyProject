@@ -4,7 +4,7 @@ namespace App\Controller;
 
 
 use App\Form\VolontairesType;
-use Container1Hz4f3x\getVolontaireRepositoryService;
+use App\Repository\VolontaireRepository;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -12,10 +12,21 @@ use App\Form\Type\VolontaireType;
 use Doctrine\Persistence\ManagerRegistry;
 use App\Entity\Volontaire;
 use Symfony\Component\Routing\Annotation\Route;
+use App\config\routes\annotations;
 
 
 class VolontaireController extends AbstractController
 {
+    /**
+     * @Route("/volontaire", name="app_volontaire_index")
+    */
+    public function index(VolontaireRepository $volontaireRepository): Response
+    {
+        return $this->render('volontaire/index.html.twig', [
+            'volontaires' => $volontaireRepository->findAll(),
+        ]);
+    }
+
     /**
      * @Route("/volontaire/add", name="volontaire_register")
      */
@@ -33,17 +44,9 @@ class VolontaireController extends AbstractController
             $data = $form->getData();
             $entityManager->persist($data);
             $entityManager->flush();
-            return $this->redirectToRoute('volontaire_success');
+            return $this->redirectToRoute('app_volontaire_index');
         }
         return $this->renderForm('volontaire/form-register.html.twig', ['form' => $form,]);
-    }
-
-    /**
-     * @Route("/volontaire/success", name="volontaire_success")
-     */
-    public function successAdd(): Response
-    {
-        return new Response('Saved new volontaire ');
     }
 
     /**
