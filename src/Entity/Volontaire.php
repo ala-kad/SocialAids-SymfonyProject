@@ -7,35 +7,38 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
-#[ORM\Entity(repositoryClass: VolontaireRepository::class)]
-
+/**
+ * @ORM\Entity(repositoryClass=VolontaireRepository::class)
+ */
 
 class Volontaire
 {
-    #[ORM\Id]
-    #[ORM\GeneratedValue]
-    #[ORM\Column]
+    /**
+     * @ORM\Id
+     * @ORM\GeneratedValue
+     * @ORM\Column(type="integer")
+     */
     private ?int $id= null;
 
-    #[ORM\Column]
+    /**
+     * @ORM\Column(type="string", length=10)
+     */
     private $cin;
 
-    #/**
-     #* @ORM\Column(type="string", length=20)
-    # */
-    #[ORM\Column]
+    /**
+     * @ORM\Column(type="string", length=20)
+     */
     private $firstname;
 
-    #/**
-    # * @ORM\Column(type="string", length=20)
-     #*/
-    #[ORM\Column]
+    /**
+     * @ORM\Column(type="string", length=20)
+     */
     private $lastname;
 
 
-     #* @ORM\Column(type="string", length=50)
-    # */
-    #[ORM\Column]
+    /**
+     * @ORM\Column(type="string", length=50)
+     */
     private $email;
 
     /**
