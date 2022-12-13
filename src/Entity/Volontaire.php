@@ -7,6 +7,7 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * @ORM\Entity(repositoryClass=VolontaireRepository::class)
  */
+
 class Volontaire
 {
     /**
@@ -20,6 +21,27 @@ class Volontaire
  * @ORM\Column(type="integer")
   */
     private int $cin;
+
+    /**
+     * @ORM\Column(type="string", length=10)
+     */
+    private $cin;
+
+    /**
+     * @ORM\Column(type="string", length=20)
+     */
+    private $firstname;
+
+    /**
+     * @ORM\Column(type="string", length=20)
+     */
+    private $lastname;
+
+
+    /**
+     * @ORM\Column(type="string", length=50)
+     */
+    private $email;
 
     /**
      * @ORM\Column(type="string", length=50)
