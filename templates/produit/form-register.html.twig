@@ -1,6 +1,10 @@
 {# templates/Produit/form-register.html.twig #}
-
 {% extends "base.html.twig" %}
  {% block body %}
-     {{ form(form) }}
+     {{ form_start(produit) }}
+     {{ form_row(produit.nom) }}
+     {{ form_row(produit.ref) }}
+     {{ form_row(produit.montant) }}
+     {{ form_row(produit.imgPath) }}
+     {{ form_end(produit) }}
  {% endblock %}

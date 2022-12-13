@@ -22,10 +22,12 @@
 
 /.idea
 /composer.phar
-./migrationss
 ./composer.lock
 ./.env
 ./.env.test
 ./composer.lock
 ./symfony.lock
 /.env
+./migrations
+.env
+./.env

@@ -2,16 +2,16 @@
 
 namespace App\Controller;
 
-
-
+use App\Entity\Produit;
 use App\Form\ProduitType;
-use Container1Hz4f3x\getProduitRepositoryService;
+
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\File\Exception\FileException;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
+use Symfony\Component\String\Slugger\SluggerInterface;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-
 use Doctrine\Persistence\ManagerRegistry;
-use App\Entity\Produit;
 use Symfony\Component\Routing\Annotation\Route;
 
 
@@ -20,21 +20,37 @@ class ProduitController extends AbstractController
     /**
      * @Route("/produit/add", name="produit_register" )
      */
-    public function new(Request $request, ManagerRegistry $doctrine): Response
+    public function new(Request $request, ManagerRegistry $doctrine, SluggerInterface $slugger): Response
     {
         $produit = new Produit();
         $form = $this->createForm(ProduitType::class, $produit);
 
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
+            $imgPath=$form->get('imgPath')->getData();
 
+            if ($imgPath) {
+                $originalFilename = pathinfo($imgPath->getClientOriginalName(), PATHINFO_FILENAME);
+                // this is needed to safely include the file name as part of the URL
+                $safeFilename = $slugger->slug($originalFilename);
+                $newFilename = $safeFilename . '-' . uniqid() . '.' . $imgPath->guessExtension();
+                try {
+                    $imgPath->move(
+                        $this->getParameter('brochures_directory'),
+                        $newFilename
+                    );
+                } catch (FileException $e) {
+                    $e->getMessage();
+                }
+                $produit->setimgPath($newFilename);
+            }
             $entityManager = $doctrine->getManager();
             $data = $form->getData();
             $entityManager->persist($data);
             $entityManager->flush();
             return $this->redirectToRoute('produit_success');
         }
-        return $this->renderForm('produit/form-register.html.twig', ['form' => $form,]);
+        return $this->renderForm('produit/form-register.html.twig', ['produit' => $form,]);
     }
 
     /**
@@ -69,9 +85,6 @@ class ProduitController extends AbstractController
                 'No product found for id ' . $id
             );
         }
-        dump($produit);
-
-        return new Response("Hello");
     }
 
     /**
