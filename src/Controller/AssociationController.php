@@ -13,6 +13,8 @@ use Symfony\Component\Routing\Annotation\Route;
 #[Route('/association')]
 class AssociationController extends AbstractController
 {
+
+
     #[Route('/', name: 'app_association_index', methods: ['GET'])]
     public function index(AssociationRepository $associationRepository): Response
     {
@@ -31,7 +33,7 @@ class AssociationController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $associationRepository->save($association, true);
 
-            return $this->redirectToRoute('app_association_index', [], Response::HTTP_SEE_OTHER);
+            return $this->redirectToRoute('app_homepage', [], Response::HTTP_SEE_OTHER);
         }
 
         return $this->renderForm('association/new.html.twig', [

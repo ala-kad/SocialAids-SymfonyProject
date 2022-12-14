@@ -96,13 +96,32 @@
 
 
 
-                <li class="nav-item">
-                    <a class="nav-link click-scroll" href="{{ path('app_association_new') }}">Association</a>
+
+                <li class="nav-item dropdown">
+                    <a class="nav-link click-scroll dropdown-toggle" href="#section_5" id="navbarLightDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">Volunteer</a>
+
+                    <ul class="dropdown-menu dropdown-menu-light" aria-labelledby="navbarLightDropdownMenuLink">
+                        <li><a class="dropdown-item" href="{{ path('volontaire_register') }}">Add</a></li>
+
+                        <li><a class="dropdown-item" href="{{ path('volontaire_list') }}">Liste</a></li>
+
+                    </ul>
                 </li>
 
-                <li class="nav-item">
-                    <a class="nav-link click-scroll" href="{{ path('volontaire_register') }}">Volunteer</a>
+
+                <li class="nav-item dropdown">
+                    <a class="nav-link click-scroll dropdown-toggle" href="#section_5" id="navbarLightDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">Association</a>
+
+                    <ul class="dropdown-menu dropdown-menu-light" aria-labelledby="navbarLightDropdownMenuLink">
+                        <li><a class="dropdown-item" href="{{ path('app_association_new') }}">Add</a></li>
+
+                        <li><a class="dropdown-item" href="{{ path('app_association_index') }}">Liste</a></li>
+
+                    </ul>
                 </li>
+
+
+
 
                 <li class="nav-item dropdown">
                     <a class="nav-link click-scroll dropdown-toggle" href="#section_5" id="navbarLightDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">Produit</a>
@@ -156,7 +175,7 @@
                     <i class="bi-telephone me-2"></i>
 
                     <a href="tel: 120-240-9600" class="site-footer-link">
-                        120-240-9600
+                        99-999-999
                     </a>
                 </p>
 
@@ -164,13 +183,13 @@
                     <i class="bi-envelope me-2"></i>
 
                     <a href="mailto:info@yourgmail.com" class="site-footer-link">
-                        donate@charity.org
+                        tek-up@gmail.com
                     </a>
                 </p>
 
                 <p class="text-white d-flex mt-3">
                     <i class="bi-geo-alt me-2"></i>
-                    Akershusstranda 20, 0150 Oslo, Norway
+                    bardo , tunis , ariana
                 </p>
 
                 <a href="#" class="custom-btn btn mt-3">Get Direction</a>

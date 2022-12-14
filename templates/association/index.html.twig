@@ -1,47 +1,64 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Association index{% endblock %}
-
 {% block body %}
-    <h1>Association index</h1>
+<br>
+    <h1>Liste Association </h1>
+    <div class="container">
+        <div class="row">
+            <div class="container-fluid pt-5">
+                <div class="row px-xl-8">
 
-    <table class="table">
-        <thead>
-            <tr>
-                <th>Id</th>
-                <th>Nom</th>
-                <th>Email</th>
-                <th>Ville</th>
-                <th>Tel</th>
-                <th>Code</th>
-                <th>Local</th>
-                <th>Objectif</th>
-                <th>actions</th>
-            </tr>
-        </thead>
-        <tbody>
-        {% for association in associations %}
-            <tr>
-                <td>{{ association.id }}</td>
-                <td>{{ association.nom }}</td>
-                <td>{{ association.email }}</td>
-                <td>{{ association.ville }}</td>
-                <td>{{ association.tel }}</td>
-                <td>{{ association.code }}</td>
-                <td>{{ association.local }}</td>
-                <td>{{ association.objectif }}</td>
-                <td>
-                    <a href="{{ path('app_association_show', {'id': association.id}) }}">show</a>
-                    <a href="{{ path('app_association_edit', {'id': association.id}) }}">edit</a>
-                </td>
-            </tr>
-        {% else %}
-            <tr>
-                <td colspan="9">no records found</td>
-            </tr>
-        {% endfor %}
-        </tbody>
-    </table>
+                    <div class="col-lg-8 table-responsive mb-5">
+                        <table class="table table-bordered text-center mb-0">
+                            <thead class="bg-secondary text-dark">
+                            <tr>
+                                <th>Id</th>
+                                <th>Nom</th>
+                                <th>Email</th>
+                                <th>Ville</th>
+                                <th>Télèphone</th>
+                                <th>Code</th>
+                                <th>Local</th>
+                                <th>Objectif</th>
+                                <th>actions</th>
 
-    <a href="{{ path('app_association_new') }}">Create new</a>
+                            </tr>
+                            </thead>
+                            <tbody class="align-middle">
+                            {% for association in associations %}
+                                <tr>
+                                    <td class="align-middle">{{ loop.index }}</td>
+                                    <td class="align-middle">{{ association.nom }}</td>
+                                    <td class="align-middle">{{ association.email }}</td>
+                                    <td class="align-middle">{{ association.ville }}</td>
+                                    <td class="align-middle">{{ association.tel }}</td>
+                                    <td class="align-middle">{{ association.code }}</td>
+                                    <td class="align-middle">{{ association.local }}</td>
+                                    <td class="align-middle">{{ association.objectif }}</td>
+                                    <td class="align-middle">
+                                        <a href="{{ path('app_association_show', {'id': association.id}) }}" >
+                                           Show
+                                        </a>
+                                        <a href="{{ path('app_association_edit', {'id': association.id}) }}" >
+                                            Edit
+                                        </a>
+                                    </td>
+                                </tr>
+                            {% else %}
+                                <tr>
+                                    <td colspan="6" class="text-center">
+                                        <h6 class="font-weight-medium">No records found</h6>
+                                    </td>
+                                </tr>
+                            {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+
 {% endblock %}
