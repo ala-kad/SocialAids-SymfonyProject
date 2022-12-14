@@ -91,7 +91,7 @@
         <div class="collapse navbar-collapse" id="navbarNav">
             <ul class="navbar-nav ms-auto">
                 <li class="nav-item">
-                    <a class="nav-link click-scroll" href="{{ path('app_homepage') }}">Home</a>
+                    <a class="nav-link click-scroll" href="{{ path('home_index') }}" target="_self">Home</a>
                 </li>
 
 
@@ -115,7 +115,7 @@
                     <ul class="dropdown-menu dropdown-menu-light" aria-labelledby="navbarLightDropdownMenuLink">
                         <li><a class="dropdown-item" href="{{ path('app_association_new') }}">Add</a></li>
 
-                        <li><a class="dropdown-item" href="{{ path('app_association_index') }}">Liste</a></li>
+                        <li><a class="dropdown-item" href="{{ path('app_association_index') }}">show</a></li>
 
                     </ul>
                 </li>
@@ -128,7 +128,7 @@
 
                     <ul class="dropdown-menu dropdown-menu-light" aria-labelledby="navbarLightDropdownMenuLink">
                         <li><a class="dropdown-item" href="{{ path('produit_register') }}">Add</a></li>
-                        <li><a class="dropdown-item" href="{{ path('volontaire_list') }}">Show</a></li>
+                        <li><a class="dropdown-item" href="{{ path('produit_list') }}">Show</a></li>
                     </ul>
                 </li>
 

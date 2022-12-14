@@ -9,9 +9,9 @@ use Symfony\Component\Routing\Annotation\Route;
 class ViewsRenderController extends AbstractController
 {
     /**
-     * @Route("/" name = "home_index")
+     * @Route("/" ,name = "home_index")
      */
     public function index(){
-        return $this->render("home/home.html.twig");
+        return $this->render("Home/Home.html.twig");
     }
 }
