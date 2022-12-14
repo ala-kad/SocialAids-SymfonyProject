@@ -1,8 +1,12 @@
 <?php
-namespace App\Entity;
 
+namespace App\Entity;
+use Symfony\Component\Routing\Annotation\Route;
 use App\Repository\VolontaireRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+
 
 /**
  * @ORM\Entity(repositoryClass=VolontaireRepository::class)
@@ -15,12 +19,7 @@ class Volontaire
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
      */
-    private int $id;
-
-/**
- * @ORM\Column(type="integer")
-  */
-    private int $cin;
+    private ?int $id= null;
 
     /**
      * @ORM\Column(type="string", length=10)
@@ -44,40 +43,38 @@ class Volontaire
     private $email;
 
     /**
-     * @ORM\Column(type="string", length=50)
+     * @var string The hashed password
+     * @ORM\Column(type="string")
      */
-    private String $firstname;
+    private $password;
 
     /**
-     * @ORM\Column(type="string", length=50)
+     * ORM\OneToMany(targetEntity: "VolProduit::class", inversedBy="VolPro")
      */
-    private String $lastname;
-
-     /**
-      * @ORM\Column(type="string", length=50)
-     */
-    private String $email;
+    private Collection $volProduits;
 
     /**
-     * @ORM\Column(type="string", length=50)
+     * ORM\OneToMany(targetEntity: "VolProduit::class", inversedBy="id_Vol")
      */
-    private String $password;
+    private Collection $VolProduits;
 
-
-
-    public function __construct(){}
+    public function __construct()
+    {
+        $this->volProduits = new ArrayCollection();
+        $this->VolProduits = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
         return $this->id;
     }
 
-    public function getCin(): ?int
+    public function getCin(): ?string
     {
         return $this->cin;
     }
 
-    public function setCin(int $cin): self
+    public function setCin(string $cin): self
     {
         $this->cin = $cin;
 
@@ -120,7 +117,7 @@ class Volontaire
         return $this;
     }
 
-    public function getPassword(): ?string
+    public function getPassword(): string
     {
         return $this->password;
     }
@@ -131,4 +128,33 @@ class Volontaire
 
         return $this;
     }
-}
+
+    /**
+     * @return Collection<int, VolProduit>
+     */
+    public function getVolProduits(): Collection
+    {
+        return $this->volProduits;
+    }
+
+    public function addVolProduit(VolProduit $volProduit): self
+    {
+        if (!$this->volProduits->contains($volProduit)) {
+            $this->volProduits->add($volProduit);
+            $volProduit->setVolPro($this);
+        }
+
+        return $this;
+    }
+
+    public function removeVolProduit(VolProduit $volProduit): self
+    {
+        if ($this->volProduits->removeElement($volProduit)) {
+            // set the owning side to null (unless already changed)
+            if ($volProduit->getVolPro() === $this) {
+                $volProduit->setVolPro(null);
+            }
+        }
+
+        return $this;
+    }}
