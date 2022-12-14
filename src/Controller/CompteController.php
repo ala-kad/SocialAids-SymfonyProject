@@ -18,6 +18,14 @@ use Symfony\Component\Routing\Annotation\Route;
 class CompteController extends AbstractController
 {
     /**
+     * @Route("/home",name="app_homepage")
+     */
+    public function homepage(){
+
+        return $this -> render('Home/Home.html.twig');
+
+    }
+    /**
      * @Route("/compte/add", name="compte_register" )
      */
     public function new(Request $request, ManagerRegistry $doctrine): Response

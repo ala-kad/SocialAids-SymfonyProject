@@ -3,9 +3,25 @@
 {% block title %}New Association{% endblock %}
 
 {% block body %}
-    <h1>Create new Association</h1>
+    <section class="volunteer-section " id="section_4">
+        <div class="container">
+            <div class="row">
 
-    {{ include('association/_form.html.twig') }}
+                <div class="col-lg-6 col-12">
+                    <h2 class="text-white mb-4">Association</h2>
 
-    <a href="{{ path('app_association_index') }}">back to list</a>
+                    <form class="custom-form volunteer-form mb-5 mb-lg-0" action="#" method="post" role="form">
+                        {{ form(form) }}
+                    </form>
+                </div>
+
+
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+
+
 {% endblock %}

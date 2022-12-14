@@ -1,5 +1,33 @@
 {# templates/Volontaire/form-register.html.twig #}
 {% extends "base.html.twig" %}
  {% block body %}
-    {{ form(form) }}
+     <section class="volunteer-section " id="section_4">
+         <div class="container">
+             <div class="row">
+
+                 <div class="col-lg-6 col-12">
+                     <h2 class="text-white mb-4">Volunteer</h2>
+
+                     <form class="custom-form volunteer-form mb-5 mb-lg-0" action="#" method="post" role="form">
+                         <h3 class="mb-4">Become a volunteer today</h3>
+
+
+                         {{ form(form) }}
+
+                     </form>
+                 </div>
+
+                 <div class="col-lg-6 col-12">
+                     <img src="{{ asset('images/smiling-casual-woman-dressed-volunteer-t-shirt-with-badge.jpg')}}" class="volunteer-image img-fluid" alt="">
+
+                     <div class="custom-block-body text-center">
+                         <h4 class="text-white mt-lg-3 mb-lg-3">About Volunteering</h4>
+
+                         <p class="text-white">Lorem Ipsum dolor sit amet, consectetur adipsicing kengan omeg kohm tokito Professional charity theme based</p>
+                     </div>
+                 </div>
+
+             </div>
+         </div>
+     </section>
  {% endblock %}

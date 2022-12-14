@@ -21,11 +21,11 @@ class Association
     private ?int $id = null;
 
     /**
-     * @ORM\Column(type="string", length=10)
+     * @ORM\Column(type="string", length=100)
      */
     private ?string $nom = null;
     /**
-     * @ORM\Column(type="string", length=10)
+     * @ORM\Column(type="string", length=100)
      */
     private ?string $email = null;
     /**
